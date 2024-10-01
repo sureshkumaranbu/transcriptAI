@@ -63,7 +63,7 @@ export default function UploadDrawer({ isOpen, onClose }: { isOpen: boolean; onC
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ fileName: uploadResult.files[0].s3Key }),
+        body: JSON.stringify({ fileName: uploadResult.files[0].key }),
       })
 
       if (!transcribeResponse.ok) {

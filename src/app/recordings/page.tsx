@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 async function getRecordings() {
   const recordings = await prisma.file.findMany({
     orderBy: {
-      uploadedAt: 'desc'
+      createdAt: 'desc'  // Changed from uploadedAt to createdAt
     },
     include: {
       transcription: true

@@ -8,21 +8,20 @@ datasource db {
 }
 
 model File {
-  id              String   @id @default(cuid())
-  name            String
-  key             String   @unique
-  type            String
-  uploadedAt      DateTime @default(now())
-  transcriptionId String?
-  transcription   Transcription?
+  id            String         @id @default(cuid())
+  name          String
+  key           String         @unique
+  type          String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  transcription Transcription?
 }
 
 model Transcription {
   id        String   @id @default(cuid())
-  fileId    String   @unique
-  file      File     @relation(fields: [fileId], references: [id])
-  status    String
-  text      String?
+  fileKey   String   @unique
+  content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  file      File     @relation(fields: [fileKey], references: [key])
 }

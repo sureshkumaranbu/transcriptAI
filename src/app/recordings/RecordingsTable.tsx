@@ -7,12 +7,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { CheckCircle } from "lucide-react"
 
 type Recording = {
-  id: number
+  id: string  // Changed from number to string
   name: string
+  key: string  // Added key field
   type: string
-  uploadedAt: Date
+  createdAt: Date  // Changed from uploadedAt to createdAt
   transcription?: {
-    status: string
+    id: string
+    content: string
   }
 }
 
@@ -23,7 +25,7 @@ type RecordingsTableProps = {
 export function RecordingsTable({ recordings }: RecordingsTableProps) {
   const router = useRouter()
 
-  const handleRowClick = (id: number) => {
+  const handleRowClick = (id: string) => {
     router.push(`/recordings/${id}`)
   }
 
@@ -36,7 +38,7 @@ export function RecordingsTable({ recordings }: RecordingsTableProps) {
           <TableHead>Name</TableHead>
           <TableHead>Type</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Uploaded At</TableHead>
+          <TableHead>Created At</TableHead>
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -58,10 +60,10 @@ export function RecordingsTable({ recordings }: RecordingsTableProps) {
             <TableCell>
               <span className="flex items-center text-green-600">
                 <CheckCircle className="mr-2 h-4 w-4" /> 
-                {recording.transcription?.status || 'No transcription'}
+                {recording.transcription ? 'Transcribed' : 'No transcription'}
               </span>
             </TableCell>
-            <TableCell>{new Date(recording.uploadedAt).toLocaleDateString()}</TableCell>
+            <TableCell>{new Date(recording.createdAt).toLocaleDateString()}</TableCell>
             <TableCell className="text-right">
               <Button variant="ghost" className="mr-2" onClick={(e) => { e.stopPropagation(); /* Handle edit */ }}>Edit</Button>
               <Button variant="ghost" className="text-red-600" onClick={(e) => { e.stopPropagation(); /* Handle delete */ }}>Delete</Button>
